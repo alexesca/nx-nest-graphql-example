@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type SetEntity {
+  id: Int
+  name: String
+  numParts: Int
+  year: String
+}
+
+type Query {
+  getAllSets: SetEntity!
+}
+
+type Mutation {
+  upvotePost(postId: Int!): SetEntity!
+}

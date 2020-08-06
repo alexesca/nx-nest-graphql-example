@@ -1,11 +1,17 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Field, Int, InputType, ObjectType, ID } from '@nestjs/graphql';
 
-export interface SetEntity {
+@ObjectType()
+export class SetEntity {
+    @Field(type => ID, { nullable: true })
     id: number;
+    @Field({ nullable: true })
     name: string;
+    @Field(type => Int, { nullable: true })
     numParts: number;
+    @Field({ nullable: true })
     year: string;
 }
+
 
 @Resolver('Set')
 export class SetResolver {
@@ -24,26 +30,27 @@ export class SetResolver {
         }
     ];
 
-    @Query('allSets')
+    @Query(returns => [SetEntity])
     getAllSets(): SetEntity[] {
         return this.sets;
     }
 
-    @Mutation()
+
+    @Mutation(returns => SetEntity)
     addSet(
-        @Args('name') name: string,
-        @Args('year') year: string,
-        @Args('numParts') numParts: number
+        @Args({ name: 'name' }) name: string,
+        @Args({ name: 'year' }) year: string,
+        @Args({ name: 'numParts', type: () => Int }) numParts: number
     ) {
-        const newSet = {
-            id: this.sets.length + 1,
+        const set: SetEntity = {
+            id: this.sets.length,
             name,
             year,
-            numParts: +numParts
-        };
+            numParts
+        }
 
-        this.sets.push(newSet);
+        this.sets.push(set);
 
-        return newSet;
+        return set;
     }
 }

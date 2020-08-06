@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type SetEntity {
+  id: ID
+  name: String
+  numParts: Int
+  year: String
+}
+
+type Query {
+  getAllSets: [SetEntity!]!
+}
+
+type Mutation {
+  addSet(numParts: Int!, year: String!, name: String!): SetEntity!
+}
